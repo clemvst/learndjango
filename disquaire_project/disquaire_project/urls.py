@@ -15,7 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from store import views
+from django.conf.urls import include, url
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url(r'^$', views.index),
+    url(r'^store/', include('store.urls')),
+    path('admin/', admin.site.urls)
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('debug/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+
+
+
+    # peutetre syntaxe a corriger ci dessus
